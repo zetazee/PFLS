@@ -13,7 +13,7 @@ G_content=$(grep -o "[Gg]" "$1" | wc -l)
 C_content=$(grep -o "[Cc]" "$1" | wc -l)
 G_C_content=$(($G_content + $C_content))
 GC_content=$(($G_C_content/$total_len))
-# why does it interpret it as zero?
+# why does it interpret as zero?
 
 echo "FASTA File Statistics:"
 echo "----------------------"
