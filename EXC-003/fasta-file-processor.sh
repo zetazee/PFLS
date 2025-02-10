@@ -2,11 +2,12 @@ seq_num=$(awk '/>/ {print}' "$1" | wc -l)
 
 total_len=$(awk '!/>/ {printf("%s", $0)}' "$1" | wc -m)
 
-longest_seq=$(awk '/>/{if (NR==1) {print} else{printf("\n%s\n",$0)}next} {printf("%s", $0)}' "$1" | awk '!/>/{if (length > max) max = length; next}END{print max}' "$1")
+longest_seq=$(awk '/>/{if (NR==1) {print} else{printf("\n%s\n",$0)}next} {printf("%s", $0)} END{print ""}' "$1" | awk '!/>/{if (length > max) max = length; next}END{print max}')
+# add a new line to the end.
 
 shortest_seq=$(awk '/^>/{if (NR==1) {print} else{printf("\n%s\n", $0)}next} {printf("%s", $0)}' "$1" | awk '!/>/{print length}' | sort | head -n 1)
 
-sum_len=$(awk '/^>/{if (NR==1) {print} else{printf("\n%s\n", $0)}next} {printf("%s", $0)}' "$1" | awk '!/>/{sum += length}END{print sum}' "$1")
+sum_len=$(awk '/^>/{if (NR==1) {print} else{printf("\n%s\n", $0)}next} {printf("%s", $0)} END{print ""}' "$1" | awk '!/>/{sum += length}END{print sum}')
 avg_len=$(bc <<< "scale=2; ($sum_len/$seq_num)")
 
 G_content=$(grep -o "[Gg]" "$1" | wc -l)
