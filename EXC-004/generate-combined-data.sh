@@ -35,9 +35,9 @@ for dir in "$s_path"/DNA*; do
             # Count the total lines in checkm.txt.
             total_lines=$(wc -l < "$dir/checkm.txt")
 
-            # Process checkm.txt excluding the first three lines and the last two lines.
+            # Process checkm.txt excluding the first three lines and the last two lines. (fix this)
             status=$(awk -v fasta="$fasta_base" -v total="$total_lines" 'NR > 3 && NR <= total - 2 {
-                split($1, bin_id, "_");  # Split the first field by "_"
+                split($1, bin_id, "_");
                 if (bin_id[4] == fasta) {
                     if ($13 >= 50 && $15 < 5)
                         print "MAG";
