@@ -5,6 +5,21 @@ total_len=$(awk '!/>/ {printf("%s", $0)}' "$1" | wc -m)
 longest_seq=$(awk '/>/{if (NR==1) {print} else{printf("\n%s\n",$0)}next} {printf("%s", $0)} END{print ""}' "$1" | awk '!/>/{if (length > max) max = length; next}END{print max}')
 # add a new line to the end.
 
+awk '
+
+BEGIN {
+seq_num=0; total_len=0; longest_seq=0; avg_len=0; GC_content=0
+}
+
+{
+seq_num="/>/ {print}  | wc -l";
+}
+
+END {
+
+}
+' $1
+
 shortest_seq=$(awk '/^>/{if (NR==1) {print} else{printf("\n%s\n", $0)}next} {printf("%s", $0)}' "$1" | awk '!/>/{print length}' | sort | head -n 1)
 
 sum_len=$(awk '/^>/{if (NR==1) {print} else{printf("\n%s\n", $0)}next} {printf("%s", $0)} END{print ""}' "$1" | awk '!/>/{sum += length}END{print sum}')
